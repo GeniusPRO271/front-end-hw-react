@@ -1,4 +1,16 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Dependencies
+/node_modules
+package-lock.json
+
+# Output directories
+/build
+/dist
+/.cache
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
 
 # dependencies
 /node_modules

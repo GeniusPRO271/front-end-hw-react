@@ -1,0 +1,4 @@
+.row.first-row > .col {
+  width: 25%;
+  float: left;
+}
