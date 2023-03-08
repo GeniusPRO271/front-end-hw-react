@@ -12,11 +12,12 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Register from './screens/register';
 import Profile from './screens/profile';
 import Menu from './screens/menu';
+import App from './screens/App';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>Hello world!</div>,
+    element: <App />,
   },
   {
     path: '/login',
