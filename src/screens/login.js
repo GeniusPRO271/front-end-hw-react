@@ -60,7 +60,6 @@ function LoginScreen() {
 
   return (
     <div>
-      <NavBar />
       <div
         className="container w-100"
         style={{

@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import CartContext from './cartNumContext';
 
 function NavBar() {
+  const token = localStorage.getItem('token');
   const [isLogin, setIsLogin] = useState(false);
   const [email, setEmail] = useState('');
+  const { cartNumber, setCartNumber } = useContext(CartContext);
 
   useEffect(() => {
     console.log('first load(if two times is probably on stric mode)');
+    getBasket();
     checkToken();
   }, []);
 
   function checkToken() {
-    const token = localStorage.getItem('token');
     if (token != undefined) {
       console.log('user is logged in');
       axios
@@ -43,6 +46,34 @@ function NavBar() {
       console.log('user is not logged in');
     }
   }
+  const getBasket = () => {
+    console.log('getting basket');
+    axios
+      .get('https://food-delivery.kreosoft.ru/api/basket', {
+        headers: {
+          accept: 'text/plain',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.data) {
+          console.log(response.data);
+          setCartNumber(response.data.length);
+        }
+      })
+      .catch((error) => {
+        // Handle the error here
+        if (error.response) {
+          if (error.response.status === 401) {
+            console.log('user is not loged in');
+          }
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+      });
+  };
 
   const handleLogOut = (event) => {
     console.log('loged out');
@@ -75,8 +106,8 @@ function NavBar() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/screens/card.html">
-                Cart
+              <a className="nav-link" href="/cart">
+                Cart <span className="badge text-bg-success">{cartNumber}</span>
               </a>
             </li>
           </ul>

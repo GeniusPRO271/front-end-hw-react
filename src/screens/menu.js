@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import NavBar from './components/NavBar';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/menu.css';
+import LoginForm from './components/loginForm';
+import CartContext from './components/cartNumContext';
 
 function Menu() {
   const [selectedCategory, setSelectedCategory] = useState([]);
@@ -11,7 +12,9 @@ function Menu() {
   const [pageNum, setPageNum] = useState(1);
   const [pageNumCount, setPageNumCount] = useState(null);
   const [basket, setBasket] = useState([]);
+  const { setCartNumber } = useContext(CartContext);
   const token = localStorage.getItem('token');
+  const [showModal, setShowModal] = useState(false);
 
   const handleCheckBoxesCategory = (event) => {
     if (event.target.checked) {
@@ -191,11 +194,12 @@ function Menu() {
           setPageNum(response.data.pagination.current);
           setDishes(response.data.dishes);
         })
-        .catch((error) => console.error(error));
+        .catch((error) => console.log(error));
     } else {
       console.log('no params');
     }
   };
+
   function parseURLParams() {
     const urlParams = new URLSearchParams(window.location.search);
     const categories = urlParams.getAll('categories');
@@ -258,10 +262,15 @@ function Menu() {
         if (response.status === 200) {
           console.log('added');
           getBasket();
+        } else {
+          console.log('error');
         }
       })
       .catch((error) => {
-        console.error(error);
+        if (error.response.status === 401) {
+          setShowModal(true);
+          console.log('not loged in');
+        }
       });
   };
   const getBasket = () => {
@@ -274,11 +283,22 @@ function Menu() {
         },
       })
       .then((response) => {
-        console.log(response.data);
-        setBasket(response.data);
+        if (response.data) {
+          setBasket(response.data);
+          setCartNumber(response.data.length);
+        }
       })
       .catch((error) => {
-        console.error(error);
+        // Handle the error here
+        if (error.response) {
+          if (error.response.status === 401) {
+            console.log('user is not loged in');
+          }
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
       });
   };
   const handleRemoveCard = (event, dishId) => {
@@ -309,11 +329,10 @@ function Menu() {
     ParseURL();
     parseURLParams();
     getBasket();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
-      <NavBar />
       <div
         className="container"
         style={{
@@ -323,6 +342,7 @@ function Menu() {
           MozBoxShadow: '0px 4px 14px 9px rgba(0, 0, 0, 0.07)',
         }}
       >
+        <LoginForm showModal={showModal} setShowModal={setShowModal} />
         <form className="row border m-1 align-items-center" id="form_id">
           <div className="col dropdown col-md-3 m-3">
             <button
@@ -415,7 +435,7 @@ function Menu() {
               aria-expanded="false"
               id="sortBtn"
             >
-              {selectedSort != null ? selectedSort : 'Sorting options'}
+              {selectedSort !== null ? selectedSort : 'Sorting options'}
             </button>
             <div className="row dropdown-menu w-75" id="sort_options">
               <div className="col form-check form-check-inline m-1">
@@ -426,7 +446,7 @@ function Menu() {
                   id="None_id"
                   value="None"
                   onChange={handleSelectedSort}
-                  checked={selectedSort == 'None'}
+                  checked={selectedSort === 'None'}
                 />
                 <label className="form-check-label ml-2" htmlFor="None_id">
                   None
@@ -440,7 +460,7 @@ function Menu() {
                   id="NameAsc_id"
                   value="NameAsc"
                   onChange={handleSelectedSort}
-                  checked={selectedSort == 'NameAsc'}
+                  checked={selectedSort === 'NameAsc'}
                 />
                 <label className="form-check-label ml-2" htmlFor="NameAsc_id">
                   NameAsc
@@ -548,7 +568,7 @@ function Menu() {
           </div>
         </form>
         <div id="menu-container">
-          <div className="row row-cols-4">
+          <div className="row row-cols-lg-4 row-cols-sm-1 row-cols-md-2 flex-column flex-md-row">
             {dishes &&
               dishes.map((d, index) => {
                 return (
@@ -582,30 +602,30 @@ function Menu() {
                       </h6>
                       {basket && basket.some((item) => item.id === d.id) ? (
                         <div className="col pagination">
-                          <a
-                            class=" col page-link"
+                          <span
+                            className=" col page-link"
                             style={{ fontSize: 14, textAlign: 'center' }}
                             onClick={(e) => {
                               handleRemoveCard(e, d.id);
                             }}
                           >
                             -
-                          </a>
-                          <a
-                            class=" col page-link"
+                          </span>
+                          <span
+                            className=" col page-link"
                             style={{ fontSize: 14, textAlign: 'center' }}
                           >
                             {basket.find((item) => item.id === d.id).amount}
-                          </a>
-                          <a
-                            class=" col page-link"
+                          </span>
+                          <span
+                            className=" col page-link"
                             style={{ fontSize: 14, textAlign: 'center' }}
                             onClick={(e) => {
                               handleAddToCard(e, d.id);
                             }}
                           >
                             +
-                          </a>
+                          </span>
                         </div>
                       ) : (
                         <button
@@ -629,9 +649,9 @@ function Menu() {
           <nav aria-label="Page navigation example">
             <ul className=" col pagination">
               <li className="page-item">
-                <a className="page-link" href="#" onClick={handleLeftArrow}>
+                <span className="page-link" onClick={handleLeftArrow}>
                   <i className="bi bi-arrow-left"></i>
-                </a>
+                </span>
               </li>
               {pageNumCount &&
                 pageNumCount.map((d, index) => {
@@ -640,21 +660,21 @@ function Menu() {
                       key={index}
                       className={`page-item ${d === pageNum ? 'active' : ''}`}
                     >
-                      <a
+                      <span
                         className="page-link"
                         value={d}
                         onClick={handlePagination}
                       >
                         {d}
-                      </a>
+                      </span>
                     </li>
                   );
                 })}
 
               <li className="page-item">
-                <a className="page-link" onClick={handleRightArrow}>
+                <span className="page-link" onClick={handleRightArrow}>
                   <i className="bi bi-arrow-right"></i>
-                </a>
+                </span>
               </li>
             </ul>
           </nav>

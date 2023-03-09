@@ -133,7 +133,6 @@ function Profile() {
   };
   return (
     <div>
-      <NavBar />
       {isLogin && (
         <div
           className="container w-100"
