@@ -131,10 +131,11 @@ function Cart() {
         basket.map((d, index) => {
           return (
             <div
-              className="row border flex-sm-row flex-column h-100"
+              key={index}
+              className="row border flex-sm-row flex-column h-100 "
               style={{ padding: 5 }}
             >
-              <div className="col-sm-auto">{index + 1}.</div>
+              <div className="col-sm-auto d-none d-sm-block">{index + 1}.</div>
               <div
                 className="col-sm-2"
                 style={{
@@ -150,16 +151,20 @@ function Cart() {
                   style={{ border: 1, borderRadius: 20 }}
                 />
               </div>
-              <div className="col-sm-auto mt-2" style={{ paddingLeft: 30 }}>
-                <h4 className="text-nowrap" style={{ fontSize: 18 }}>
+              <div className="col-sm-auto mt-2 " style={{ paddingLeft: 30 }}>
+                <h4 className="text-nowrap" style={{ fontSize: 25 }}>
                   {d.name}
                 </h4>
-                <p>Price/dish - {d.price} ₽</p>
+                <p style={{ fontSize: 20 }}>Price/dish - {d.price} ₽</p>
               </div>
-              <div className="col-auto mt-1  pagination" style={{ height: 30 }}>
+              <div className="col mt-2  pagination " style={{ height: 30 }}>
                 <span
                   className="page-link"
-                  style={{ fontSize: 10, textAlign: 'center' }}
+                  style={{
+                    fontSize: 15,
+                    textAlign: 'center',
+                    alignSelf: 'center',
+                  }}
                   onClick={(e) => {
                     handleRemoveCard(e, d.id);
                   }}
@@ -168,13 +173,21 @@ function Cart() {
                 </span>
                 <span
                   className="page-link"
-                  style={{ fontSize: 10, textAlign: 'center' }}
+                  style={{
+                    fontSize: 15,
+                    textAlign: 'center',
+                    alignSelf: 'center',
+                  }}
                 >
                   {basket.find((item) => item.id === d.id).amount}
                 </span>
                 <span
                   className="page-link"
-                  style={{ fontSize: 10, textAlign: 'center' }}
+                  style={{
+                    fontSize: 15,
+                    textAlign: 'center',
+                    alignSelf: 'center',
+                  }}
                   onClick={(e) => {
                     handleAddToCard(e, d.id);
                   }}
@@ -182,10 +195,26 @@ function Cart() {
                   +
                 </span>
               </div>
-              <div className="col" style={{ textAlign: 'right' }}>
+
+              <div
+                className="col d-none d-sm-block"
+                style={{ textAlign: 'right' }}
+              >
                 <button
-                  className="btn btn-danger"
-                  style={{ fontSize: 10, textAlign: 'center' }}
+                  className="btn btn-danger "
+                  style={{ fontSize: 15, textAlign: 'center' }}
+                  onClick={(e) => handleDelete(e, d.id)}
+                >
+                  Remove
+                </button>
+              </div>
+              <div
+                className="col d-block d-sm-none"
+                style={{ textAlign: 'center' }}
+              >
+                <button
+                  className=" row btn btn-danger w-100"
+                  style={{ fontSize: 15, textAlign: 'center' }}
                   onClick={(e) => handleDelete(e, d.id)}
                 >
                   Remove
