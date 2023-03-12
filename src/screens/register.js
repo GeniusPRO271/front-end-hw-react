@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import NavBar from './components/NavBar';
 import axios from 'axios';
 
 function Register() {
@@ -15,7 +14,6 @@ function Register() {
 
   const handleInput = (event) => {
     event.preventDefault();
-    console.log(name, gender, phone, birth, address, email, pass);
     axios
       .post(
         'https://food-delivery.kreosoft.ru/api/account/register',
@@ -35,7 +33,6 @@ function Register() {
         }
       )
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           setSuccess('Registered');
           setErr(null);

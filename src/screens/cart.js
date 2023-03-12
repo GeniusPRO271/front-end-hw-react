@@ -9,7 +9,6 @@ function Cart() {
 
   const handleAddToCard = (event, dishId) => {
     event.preventDefault();
-    console.log(token);
     axios
       .post(
         `https://food-delivery.kreosoft.ru/api/basket/dish/${dishId}`,
@@ -21,9 +20,7 @@ function Cart() {
         }
       )
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
-          console.log('added');
           getBasket();
         } else {
           console.log('error');
@@ -38,7 +35,6 @@ function Cart() {
 
   const handleRemoveCard = (event, dishId) => {
     event.preventDefault();
-    console.log(token);
     axios
       .delete(
         `https://food-delivery.kreosoft.ru/api/basket/dish/${dishId}?increase=true`,
@@ -50,7 +46,6 @@ function Cart() {
         }
       )
       .then((response) => {
-        console.log(response);
         if (response.status) {
           getBasket();
         }
@@ -61,7 +56,6 @@ function Cart() {
   };
   const handleDelete = (event, dishId) => {
     event.preventDefault();
-    console.log(token);
     axios
       .delete(
         `https://food-delivery.kreosoft.ru/api/basket/dish/${dishId}?increase=false`,
@@ -73,7 +67,6 @@ function Cart() {
         }
       )
       .then((response) => {
-        console.log(response);
         if (response.status) {
           getBasket();
         }
@@ -85,9 +78,8 @@ function Cart() {
 
   useEffect(() => {
     getBasket();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const getBasket = () => {
-    console.log('getting basket');
     axios
       .get('https://food-delivery.kreosoft.ru/api/basket', {
         headers: {
@@ -118,111 +110,125 @@ function Cart() {
     <div
       className="container w-100"
       style={{
-        padding: 20,
+        maxWidth: '80%',
+        padding: 10,
         boxShadow: '0px 4px 14px 9px rgba(0, 0, 0, 0.07)',
         WebkitBoxShadow: '0px 4px 14px 9px rgba(0, 0, 0, 0.07)',
         MozBoxShadow: '0px 4px 14px 9px rgba(0, 0, 0, 0.07)',
       }}
     >
-      <div>
-        <h1>Your Cart</h1>
-      </div>
-      {basket &&
-        basket.map((d, index) => {
-          return (
-            <div
-              key={index}
-              className="row border flex-sm-row flex-column h-100 "
-              style={{ padding: 5 }}
-            >
-              <div className="col-sm-auto d-none d-sm-block">{index + 1}.</div>
-              <div
-                className="col-sm-2"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <img
-                  src={d.image}
-                  alt="Logo"
-                  className="h-100 w-100"
-                  style={{ border: 1, borderRadius: 20 }}
-                />
-              </div>
-              <div className="col-sm-auto mt-2 " style={{ paddingLeft: 30 }}>
-                <h4 className="text-nowrap" style={{ fontSize: 25 }}>
-                  {d.name}
-                </h4>
-                <p style={{ fontSize: 20 }}>Price/dish - {d.price} ₽</p>
-              </div>
-              <div className="col mt-2  pagination " style={{ height: 30 }}>
-                <span
-                  className="page-link"
-                  style={{
-                    fontSize: 15,
-                    textAlign: 'center',
-                    alignSelf: 'center',
-                  }}
-                  onClick={(e) => {
-                    handleRemoveCard(e, d.id);
-                  }}
-                >
-                  -
-                </span>
-                <span
-                  className="page-link"
-                  style={{
-                    fontSize: 15,
-                    textAlign: 'center',
-                    alignSelf: 'center',
-                  }}
-                >
-                  {basket.find((item) => item.id === d.id).amount}
-                </span>
-                <span
-                  className="page-link"
-                  style={{
-                    fontSize: 15,
-                    textAlign: 'center',
-                    alignSelf: 'center',
-                  }}
-                  onClick={(e) => {
-                    handleAddToCard(e, d.id);
-                  }}
-                >
-                  +
-                </span>
-              </div>
-
-              <div
-                className="col d-none d-sm-block"
-                style={{ textAlign: 'right' }}
-              >
-                <button
-                  className="btn btn-danger "
-                  style={{ fontSize: 15, textAlign: 'center' }}
-                  onClick={(e) => handleDelete(e, d.id)}
-                >
-                  Remove
-                </button>
-              </div>
-              <div
-                className="col d-block d-sm-none"
-                style={{ textAlign: 'center' }}
-              >
-                <button
-                  className=" row btn btn-danger w-100"
-                  style={{ fontSize: 15, textAlign: 'center' }}
-                  onClick={(e) => handleDelete(e, d.id)}
-                >
-                  Remove
-                </button>
-              </div>
+      <div className="row justify-content-center p-3">
+        <div className="col">
+          <form id="cart-form">
+            <div>
+              <h1>Your Cart</h1>
             </div>
-          );
-        })}
+            {basket &&
+              basket.map((d, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="row border flex-sm-row flex-column h-100"
+                    style={{ padding: 5 }}
+                  >
+                    <div className="col-sm-auto d-none d-sm-block">
+                      {index + 1}.
+                    </div>
+                    <div
+                      className=" col-1 "
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <img
+                        src={d.image}
+                        alt="Logo"
+                        className="w-100 h-90 rounded-pill"
+                      />
+                    </div>
+                    <div
+                      className="col-sm-auto mt-2 "
+                      style={{ paddingLeft: 30 }}
+                    >
+                      <h4 className="text-nowrap" style={{ fontSize: 20 }}>
+                        {d.name}
+                      </h4>
+                      <p style={{ fontSize: 13 }}>Price/dish - {d.price} ₽</p>
+                    </div>
+                    <div
+                      className="col my-2  pagination mx-4"
+                      style={{ height: 30 }}
+                    >
+                      <span
+                        className="page-link"
+                        style={{
+                          fontSize: 15,
+                          textAlign: 'center',
+                          alignSelf: 'center',
+                        }}
+                        onClick={(e) => {
+                          handleRemoveCard(e, d.id);
+                        }}
+                      >
+                        -
+                      </span>
+                      <span
+                        className="page-link"
+                        style={{
+                          fontSize: 15,
+                          textAlign: 'center',
+                          alignSelf: 'center',
+                        }}
+                      >
+                        {basket.find((item) => item.id === d.id).amount}
+                      </span>
+                      <span
+                        className="page-link"
+                        style={{
+                          fontSize: 15,
+                          textAlign: 'center',
+                          alignSelf: 'center',
+                        }}
+                        onClick={(e) => {
+                          handleAddToCard(e, d.id);
+                        }}
+                      >
+                        +
+                      </span>
+                    </div>
+
+                    <div
+                      className="col d-none d-sm-block"
+                      style={{ textAlign: 'right' }}
+                    >
+                      <button
+                        className="btn btn-danger "
+                        style={{ fontSize: 15, textAlign: 'center' }}
+                        onClick={(e) => handleDelete(e, d.id)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <div
+                      className="col d-block d-sm-none"
+                      style={{ textAlign: 'center' }}
+                    >
+                      <button
+                        className=" row btn btn-danger w-100"
+                        style={{ fontSize: 15, textAlign: 'center' }}
+                        onClick={(e) => handleDelete(e, d.id)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

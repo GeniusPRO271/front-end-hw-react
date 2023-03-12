@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import NavBar from './components/NavBar';
 import axios from 'axios';
 
 function LoginScreen() {
@@ -10,7 +9,6 @@ function LoginScreen() {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    console.log(`Username: ${email}, Password: ${password}`);
 
     axios
       .post(
@@ -27,7 +25,6 @@ function LoginScreen() {
       )
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data.token);
           localStorage.setItem('token', response.data.token);
           setSuccess('Loged In');
           setErr(null);
@@ -39,7 +36,6 @@ function LoginScreen() {
         // Handle successful response here
       })
       .catch((error) => {
-        console.log(error);
         setSuccess(null);
         // Handle any errors that occur during the API call here
         if (error.response) {
@@ -63,6 +59,7 @@ function LoginScreen() {
       <div
         className="container w-100"
         style={{
+          maxWidth: '80%',
           padding: 10,
           boxShadow: '0px 4px 14px 9px rgba(0, 0, 0, 0.07)',
           WebkitBoxShadow: '0px 4px 14px 9px rgba(0, 0, 0, 0.07)',

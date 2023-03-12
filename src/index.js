@@ -13,14 +13,17 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Register from './screens/register';
 import Profile from './screens/profile';
 import Menu from './screens/menu';
-import App from './screens/App';
 import Cart from './screens/cart';
 import CartContext from './screens/components/cartNumContext';
+import Orders from './screens/order';
+import Purchase from './screens/purchase';
+import OrderId from './screens/orderId';
+import MenuId from './screens/menuId';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <Menu />,
   },
   {
     path: '/login',
@@ -35,12 +38,28 @@ const router = createBrowserRouter([
     element: <Profile />,
   },
   {
-    path: '/menu',
+    path: '/item',
     element: <Menu />,
+  },
+  {
+    path: '/item/:id',
+    element: <MenuId />,
   },
   {
     path: '/cart',
     element: <Cart />,
+  },
+  {
+    path: '/orders',
+    element: <Orders />,
+  },
+  {
+    path: '/orders/:id',
+    element: <OrderId />,
+  },
+  {
+    path: '/purchase',
+    element: <Purchase />,
   },
 ]);
 

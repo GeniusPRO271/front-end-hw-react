@@ -9,14 +9,12 @@ function NavBar() {
   const { cartNumber, setCartNumber } = useContext(CartContext);
 
   useEffect(() => {
-    console.log('first load(if two times is probably on stric mode)');
     getBasket();
     checkToken();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function checkToken() {
-    if (token != undefined) {
-      console.log('user is logged in');
+    if (token !== undefined) {
       axios
         .get('https://food-delivery.kreosoft.ru/api/account/profile', {
           headers: {
@@ -33,7 +31,7 @@ function NavBar() {
           console.error('Error fetching user data:', error);
           // Handle the error here
           if (error.response) {
-            if (error.response.status == 401) {
+            if (error.response.status === 401) {
               localStorage.removeItem('token');
             }
           } else if (error.request) {
@@ -42,12 +40,9 @@ function NavBar() {
             console.log('Error', error.message);
           }
         });
-    } else {
-      console.log('user is not logged in');
     }
   }
   const getBasket = () => {
-    console.log('getting basket');
     axios
       .get('https://food-delivery.kreosoft.ru/api/basket', {
         headers: {
@@ -57,7 +52,6 @@ function NavBar() {
       })
       .then((response) => {
         if (response.data) {
-          console.log(response.data);
           setCartNumber(response.data.length);
         }
       })
@@ -65,7 +59,6 @@ function NavBar() {
         // Handle the error here
         if (error.response) {
           if (error.response.status === 401) {
-            console.log('user is not loged in');
           }
         } else if (error.request) {
           console.log(error.request);
@@ -76,7 +69,6 @@ function NavBar() {
   };
 
   const handleLogOut = (event) => {
-    console.log('loged out');
     setIsLogin(false);
     setEmail('');
     localStorage.removeItem('token');
@@ -91,17 +83,17 @@ function NavBar() {
         <div>
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="navbar-brand" href="/screens/home.html">
+              <a className="navbar-brand" href="/">
                 Delivery.Eats
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/menu">
+              <a className="nav-link" href="/item">
                 Menu
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/screens/orders.html">
+              <a className="nav-link" href="/orders">
                 Orders
               </a>
             </li>
@@ -114,9 +106,14 @@ function NavBar() {
         </div>
         {isLogin ? (
           <div>
-            <span className="mx-2" id="user-email">
+            <a
+              className="mx-2 text-decoration-none"
+              id="user-email"
+              href="/profile"
+              style={{ color: 'black' }}
+            >
               {email}
-            </span>
+            </a>
             <button
               id="logout-btn"
               className="btn btn-primary"

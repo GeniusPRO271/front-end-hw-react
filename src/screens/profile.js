@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import NavBar from './components/NavBar';
 import axios from 'axios';
 
 function Profile() {
@@ -17,11 +16,10 @@ function Profile() {
 
   useEffect(() => {
     getUserData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function getUserData() {
-    console.log('getting users data...');
-    if (token != undefined) {
+    if (token !== undefined) {
       axios
         .get('https://food-delivery.kreosoft.ru/api/account/profile', {
           headers: {
@@ -29,7 +27,6 @@ function Profile() {
           },
         })
         .then((response) => {
-          console.log(response.data);
           if (response.data) {
             setIsLogin(true);
             setName(response.data.fullName);
@@ -45,7 +42,7 @@ function Profile() {
           console.error('Error fetching user data:', error);
           // Handle the error here
           if (error.response) {
-            if (error.response.status == 401) {
+            if (error.response.status === 401) {
               localStorage.removeItem('token');
             }
           } else if (error.request) {
@@ -56,7 +53,6 @@ function Profile() {
           window.location.href = 'http://localhost:3000/login';
         });
     } else {
-      console.log('user is not logged in');
       window.location.href = 'http://localhost:3000/login';
     }
   }
@@ -137,6 +133,7 @@ function Profile() {
         <div
           className="container w-100"
           style={{
+            maxWidth: '80%',
             padding: 10,
             boxShadow: '0px 4px 14px 9px rgba(0, 0, 0, 0.07)',
             WebkitBoxShadow: '0px 4px 14px 9px rgba(0, 0, 0, 0.07)',

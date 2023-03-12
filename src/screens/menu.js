@@ -33,7 +33,6 @@ function Menu() {
   const handleFilters = (event) => {
     event.preventDefault();
     let url = `${window.location.origin}${window.location.pathname}?`;
-    console.log(url);
     // Check whether the URL already has query parameters
 
     // add categories to url
@@ -100,7 +99,6 @@ function Menu() {
     for (let index = 0; index < pagination; index++) {
       pag.push(index + 1);
     }
-    console.log(pag);
     setPageNumCount(pag);
   };
   const handleRightArrow = (event) => {
@@ -138,8 +136,6 @@ function Menu() {
       }
 
       window.location.href = url;
-    } else {
-      console.log(pageNum);
     }
   };
   const handleLeftArrow = (event) => {
@@ -177,8 +173,6 @@ function Menu() {
       }
 
       window.location.href = url;
-    } else {
-      console.log(pageNum);
     }
   };
   const ParseURL = () => {
@@ -196,7 +190,6 @@ function Menu() {
         })
         .catch((error) => console.log(error));
     } else {
-      console.log('no params');
     }
   };
 
@@ -246,7 +239,6 @@ function Menu() {
   };
   const handleAddToCard = (event, dishId) => {
     event.preventDefault();
-    console.log(token);
     axios
       .post(
         `https://food-delivery.kreosoft.ru/api/basket/dish/${dishId}`,
@@ -258,23 +250,18 @@ function Menu() {
         }
       )
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
-          console.log('added');
           getBasket();
         } else {
-          console.log('error');
         }
       })
       .catch((error) => {
         if (error.response.status === 401) {
           setShowModal(true);
-          console.log('not loged in');
         }
       });
   };
   const getBasket = () => {
-    console.log('getting basket');
     axios
       .get('https://food-delivery.kreosoft.ru/api/basket', {
         headers: {
@@ -292,7 +279,6 @@ function Menu() {
         // Handle the error here
         if (error.response) {
           if (error.response.status === 401) {
-            console.log('user is not loged in');
           }
         } else if (error.request) {
           console.log(error.request);
@@ -303,7 +289,6 @@ function Menu() {
   };
   const handleRemoveCard = (event, dishId) => {
     event.preventDefault();
-    console.log(token);
     axios
       .delete(
         `https://food-delivery.kreosoft.ru/api/basket/dish/${dishId}?increase=true`,
@@ -315,7 +300,6 @@ function Menu() {
         }
       )
       .then((response) => {
-        console.log(response);
         if (response.status) {
           getBasket();
         }
@@ -325,7 +309,6 @@ function Menu() {
       });
   };
   useEffect(() => {
-    console.log('parssing...');
     ParseURL();
     parseURLParams();
     getBasket();
@@ -336,6 +319,7 @@ function Menu() {
       <div
         className="container"
         style={{
+          maxWidth: '80%',
           padding: 10,
           boxShadow: '0px 4px 14px 9px rgba(0, 0, 0, 0.07)',
           WebkitBoxShadow: '0px 4px 14px 9px rgba(0, 0, 0, 0.07)',
@@ -573,11 +557,13 @@ function Menu() {
               dishes.map((d, index) => {
                 return (
                   <div className="col p-3" key={index}>
-                    <img
-                      src={d.image}
-                      alt="Logo"
-                      className="border img-fluid"
-                    />
+                    <a href={'/item/' + d.id}>
+                      <img
+                        src={d.image}
+                        alt="Logo"
+                        className="border img-fluid"
+                      />
+                    </a>
                     <div className="border p-3" style={{ height: 350 }}>
                       <h4>{d.name}</h4>
                       <h6 style={{ color: 'grey' }}>

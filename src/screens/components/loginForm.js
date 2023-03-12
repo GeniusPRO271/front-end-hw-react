@@ -10,7 +10,6 @@ function LoginForm({ showModal, setShowModal }) {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    console.log(`Username: ${email}, Password: ${password}`);
 
     axios
       .post(
@@ -27,7 +26,6 @@ function LoginForm({ showModal, setShowModal }) {
       )
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data.token);
           localStorage.setItem('token', response.data.token);
           setSuccess('Loged In');
           setErr(null);
