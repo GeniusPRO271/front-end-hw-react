@@ -131,14 +131,14 @@ function OrderId() {
                           }}
                         >
                           <span style={{ fontWeight: 'bold' }}>Price: </span>
-                          {d.totalPrice}
+                          {d.totalPrice} ₽
                         </p>
                       </div>
                     </div>
                   );
                 })}
               <div className="block mt-3" style={{ fontWeight: 'bold' }}>
-                Total: {data.price}
+                Total: {data.price} ₽
               </div>
             </form>
           </div>
