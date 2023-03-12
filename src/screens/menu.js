@@ -583,7 +583,7 @@ function Menu() {
                       </h6>
                     </div>
                     <div className="row border p-3 mx-0">
-                      <h6 className="col mt-2" style={{ fontSize: 16 }}>
+                      <h6 className="col mt-2" style={{ fontSize: 13 }}>
                         Price - {d.price} ₽
                       </h6>
                       {basket && basket.some((item) => item.id === d.id) ? (
@@ -616,7 +616,7 @@ function Menu() {
                       ) : (
                         <button
                           type="button"
-                          className="col btn btn-primary"
+                          className=" col btn btn-primary"
                           style={{ fontSize: 14 }}
                           onClick={(e) => {
                             handleAddToCard(e, d.id);

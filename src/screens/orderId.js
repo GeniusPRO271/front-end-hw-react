@@ -79,7 +79,7 @@ function OrderId() {
                   return (
                     <div key={index} className="row border">
                       <div
-                        className=" col-1 "
+                        className=" col-md-12 col-lg-3 col-xxl-3 col-sm-12 mt-sm-0 mt-2"
                         style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -89,7 +89,7 @@ function OrderId() {
                         <img
                           src={d.image}
                           alt="Logo"
-                          className="w-100 h-90 rounded-pill"
+                          className="w-50 h-90 rounded-pill"
                         />
                       </div>
                       <div className="col-sm-auto mt-2 ">

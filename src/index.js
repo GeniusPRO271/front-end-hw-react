@@ -19,47 +19,58 @@ import Orders from './screens/order';
 import Purchase from './screens/purchase';
 import OrderId from './screens/orderId';
 import MenuId from './screens/menuId';
+import ErrorPage from './screens/components/errorPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Menu />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/login',
     element: <LoginScreen />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/register',
     element: <Register />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/profile',
     element: <Profile />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/item',
     element: <Menu />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/item/:id',
     element: <MenuId />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/cart',
     element: <Cart />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/orders',
     element: <Orders />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/orders/:id',
     element: <OrderId />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/purchase',
     element: <Purchase />,
+    errorElement: <ErrorPage />,
   },
 ]);
 

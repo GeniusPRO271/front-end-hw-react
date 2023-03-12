@@ -240,7 +240,7 @@ function Purchase() {
               </form>
             </div>
             <form className="m-2">
-              <span>Item List</span>
+              <span>Item list:</span>
               {basket &&
                 basket.map((d, index) => {
                   return (
@@ -250,7 +250,7 @@ function Purchase() {
                       style={{ padding: 5 }}
                     >
                       <div
-                        className=" col-1 "
+                        className=" col-lg-2 "
                         style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -260,7 +260,7 @@ function Purchase() {
                         <img
                           src={d.image}
                           alt="Logo"
-                          className="w-100 h-90 rounded-pill"
+                          className="w-75 h-90 rounded-pill"
                         />
                       </div>
                       <div className="col-sm-auto mt-2 ">
@@ -302,14 +302,14 @@ function Purchase() {
                           }}
                         >
                           <span style={{ fontWeight: 'bold' }}>Price: </span>
-                          {d.totalPrice}
+                          {d.totalPrice} ₽
                         </p>
                       </div>
                     </div>
                   );
                 })}
               <div className="col mt-3">
-                <span className="row" style={{ fontSize: 16 }}>
+                <span className="row" style={{ fontSize: 16, padding: 5 }}>
                   {' '}
                   Total: {totalPrice} ₽
                 </span>

@@ -80,58 +80,81 @@ function NavBar() {
       style={{ padding: 10, paddingBottom: 10 }}
     >
       <div className="container-fluid">
-        <div>
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="navbar-brand" href="/">
-                Delivery.Eats
-              </a>
-            </li>
-            <li className="nav-item">
+        <a className="navbar-brand" href="/">
+          Delivery.Eats
+        </a>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className=" row collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav p-2">
+            <li className="col-0 nav-item">
               <a className="nav-link" href="/item">
                 Menu
               </a>
             </li>
-            <li className="nav-item">
+            <li className="col-0 nav-item">
               <a className="nav-link" href="/orders">
                 Orders
               </a>
             </li>
-            <li className="nav-item">
+            <li className=" col-0 nav-item">
               <a className="nav-link" href="/cart">
                 Cart <span className="badge text-bg-success">{cartNumber}</span>
               </a>
             </li>
+            {isLogin ? (
+              <>
+                <li className="col nav-item text-lg-end">
+                  <a
+                    className="nav-link"
+                    href="/profile"
+                    style={{ color: 'black' }}
+                  >
+                    {email}
+                  </a>
+                </li>
+                <li>
+                  <button
+                    className=" col btn btn-primary"
+                    onClick={handleLogOut}
+                  >
+                    Logout
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className=" col nav-item text-lg-end m-lg-0 m-1">
+                  <a
+                    href="/login"
+                    className="btn btn-primary mx-2"
+                    id="login-btn"
+                  >
+                    Login
+                  </a>
+                </li>
+                <li className=" col-0 nav-item">
+                  <a
+                    href="/register"
+                    className="btn btn-primary"
+                    id="register-btn"
+                  >
+                    Register
+                  </a>
+                </li>
+              </>
+            )}
           </ul>
         </div>
-        {isLogin ? (
-          <div>
-            <a
-              className="mx-2 text-decoration-none"
-              id="user-email"
-              href="/profile"
-              style={{ color: 'black' }}
-            >
-              {email}
-            </a>
-            <button
-              id="logout-btn"
-              className="btn btn-primary"
-              onClick={handleLogOut}
-            >
-              Logout
-            </button>
-          </div>
-        ) : (
-          <div>
-            <a href="/login" className="btn btn-primary mx-2" id="login-btn">
-              Login
-            </a>
-            <a href="/register" className="btn btn-primary" id="register-btn">
-              Register
-            </a>
-          </div>
-        )}
       </div>
     </nav>
   );

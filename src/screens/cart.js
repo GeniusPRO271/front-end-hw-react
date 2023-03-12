@@ -135,7 +135,7 @@ function Cart() {
                       {index + 1}.
                     </div>
                     <div
-                      className=" col-1 "
+                      className=" col-lg-2 col-md-3 col-sm-4"
                       style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -145,7 +145,7 @@ function Cart() {
                       <img
                         src={d.image}
                         alt="Logo"
-                        className="w-100 h-90 rounded-pill"
+                        className="w-75 h-90 rounded-pill"
                       />
                     </div>
                     <div
