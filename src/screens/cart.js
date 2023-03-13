@@ -98,6 +98,7 @@ function Cart() {
         if (error.response) {
           if (error.response.status === 401) {
             console.log('user is not loged in');
+            window.location.href = window.location.origin + "/login"
           }
         } else if (error.request) {
           console.log(error.request);

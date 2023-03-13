@@ -41,6 +41,7 @@ function Orders() {
         if (error.response) {
           if (error.response.status === 401) {
             console.log('user is not loged in');
+            window.location.href = window.location.origin + "/login"
           }
         } else if (error.request) {
           console.log(error.request);
@@ -119,10 +120,10 @@ function Orders() {
           <div id="order-form">
             {basket && basket.length > 0 && (
               <div className="row mb-3 border p-3 mx-0 align-items-center">
-                <div className="col" style={{ fontSize: 14 }}>
+                <div className="col text-md-start text-center" style={{ fontSize: 14 }}>
                   An order can be created with the items in the cart
                 </div>
-                <div className="col-auto">
+                <div className="col-md-auto col-sm-12 text-center">
                   <a className="btn btn-success" href="/purchase">
                     Create order
                   </a>
@@ -178,9 +179,8 @@ function Orders() {
                       >
                         {d.status === 'InProcess' && (
                           <button
-                            className="btn btn btn-outline-success mt-1 "
+                            className="col-12 col-sm-auto btn btn btn-outline-success m-sm-3 m-1"
                             style={{
-                              textAlign: 'center',
                               fontSize: 13,
                             }}
                             onClick={(e) => handleConfirmOrder(e, d.id)}
@@ -188,13 +188,7 @@ function Orders() {
                             Confirm Order
                           </button>
                         )}
-                        <p
-                          style={{
-                            position: 'absolute',
-                            bottom: 0,
-                            right: 10,
-                            fontSize: 13,
-                          }}
+                        <p className="col-md-0 col-sm text-start text-sm-end"
                         >
                           <span style={{ fontWeight: 'bold' }}>
                             Total order cost:{' '}

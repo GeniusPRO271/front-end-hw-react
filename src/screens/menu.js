@@ -552,7 +552,7 @@ function Menu() {
           </div>
         </form>
         <div id="menu-container">
-          <div className="row row-cols-lg-4 row-cols-sm-1 row-cols-md-2 flex-column flex-md-row">
+          <div className="row row-cols-md-2  row-cols-sm-1  row-cols-lg-3 row-cols-xl-4 flex-column flex-md-row">
             {dishes &&
               dishes.map((d, index) => {
                 return (
@@ -578,7 +578,7 @@ function Menu() {
                       >
                         <RatingStars key={index} rating={d.rating} />
                       </div>
-                      <h6 style={{ color: 'black', fontWeight: 'normal' }}>
+                      <h6 className="" style={{ color: 'black', fontWeight: 'normal' }}>
                         {d.description}
                       </h6>
                     </div>
@@ -632,28 +632,32 @@ function Menu() {
           </div>
         </div>
         {dishes && (
-          <nav aria-label="Page navigation example">
-            <ul className=" col pagination">
+          <nav aria-label="Page navigation">
+            <ul className="pagination">
               <li className="page-item">
-                <span className="page-link" onClick={handleLeftArrow}>
+                <span className="page-link fs-6" onClick={handleLeftArrow}>
                   <i className="bi bi-arrow-left"></i>
                 </span>
               </li>
               {pageNumCount &&
                 pageNumCount.map((d, index) => {
                   return (
-                    <li
+                    <>
+                    {d>5 ? <></>: <li
                       key={index}
                       className={`page-item ${d === pageNum ? 'active' : ''}`}
                     >
                       <span
-                        className="page-link"
+                        className="page-link fs-6"
                         value={d}
                         onClick={handlePagination}
+                        
                       >
                         {d}
                       </span>
-                    </li>
+                    </li>}
+                    </>
+                    
                   );
                 })}
 
