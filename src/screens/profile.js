@@ -50,10 +50,10 @@ function Profile() {
           } else {
             console.log('Error', error.message);
           }
-          window.location.href = 'http://localhost:3000/login';
+          window.location.href = window.location.origin + '/login';
         });
     } else {
-      window.location.href = 'http://localhost:3000/login';
+      window.location.href = window.location.origin + '/login';
     }
   }
 
